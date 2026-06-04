@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="काम सूत्र — आपके सारे लिंक, सुंदर और व्यवस्थित तरीके से एक जगह." />
+  <meta name="theme-color" content="#0b0d12" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)" />
+  <meta property="og:title" content="काम सूत्र · Personal Link Hub" />
+  <meta property="og:description" content="आपके सारे लिंक, सुंदर और व्यवस्थित तरीके से एक जगह." />
+  <meta property="og:type" content="website" />
+  <title>काम सूत्र · Personal Link Hub</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23f97316'/><stop offset='0.5' stop-color='%238b5cf6'/><stop offset='1' stop-color='%2306b6d4'/></linearGradient></defs><rect width='48' height='48' rx='12' fill='url(%23g)'/><path d='M19 18.5c4.4-4.4 11.6-4.4 16 0s4.4 11.6 0 16' fill='none' stroke='white' stroke-width='4' stroke-linecap='round'/><path d='M29 29.5c-4.4 4.4-11.6 4.4-16 0s-4.4-11.6 0-16' fill='none' stroke='white' stroke-width='4' stroke-linecap='round'/><circle cx='35.5' cy='18' r='3.4' fill='%23fef3c7'/><circle cx='12.5' cy='30' r='3.4' fill='%23cffafe'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Folders">
+      <div class="sidebar-header">
+        <div class="brand">
+          <span class="brand-icon" aria-hidden="true">
+            <svg class="brand-mark" viewBox="0 0 48 48" role="img" focusable="false">
+              <path d="M19 18.5c4.4-4.4 11.6-4.4 16 0s4.4 11.6 0 16" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+              <path d="M29 29.5c-4.4 4.4-11.6 4.4-16 0s-4.4-11.6 0-16" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+              <circle cx="35.5" cy="18" r="3.4" fill="#fef3c7" />
+              <circle cx="12.5" cy="30" r="3.4" fill="#cffafe" />
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-logo-text" aria-label="काम सूत्र">
+              <span class="brand-word">काम</span>
+              <span class="brand-word">सूत्र</span>
+            </span>
+            <span class="brand-sub">लिंक का सुंदर संग्रह</span>
+          </span>
+        </div>
+      </div>
+      <div class="sidebar-section-label">Folders</div>
+      <ul class="folder-list" id="folderList"></ul>
+      <div class="sidebar-actions">
+        <button type="button" class="btn btn-primary" id="btnAddFolder" style="width:100%">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="M12 11v6M9 14h6"/></svg>
+          <span>New folder</span>
+        </button>
+      </div>
+      <div class="sidebar-footer" id="sidebarFooter">
+        <div class="footer-row"><span>Total links</span><span class="num" id="footerLinks">0</span></div>
+        <div class="footer-row"><span>Folders</span><span class="num" id="footerFolders">0</span></div>
+        <div class="footer-row"><span>Last backup</span><span id="footerBackup">never</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="toolbar">
+        <button type="button" class="btn btn-ghost icon-btn mobile-toggle" id="btnMenu" aria-expanded="false" aria-controls="sidebar" aria-label="Toggle menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="search-wrap">
+          <label class="sr-only" for="searchInput">Search links</label>
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="searchInput" placeholder="Search links, URLs, tags…" autocomplete="off" />
+          <span class="search-hint kbd" aria-hidden="true"><kbd>/</kbd></span>
+        </div>
+        <button type="button" class="cmd-hint" id="btnCmdPalette" aria-label="Open command palette">
+          <svg style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          Quick find
+          <kbd>⌘K</kbd>
+        </button>
+        <div class="toolbar-actions">
+          <button type="button" class="btn btn-primary" id="btnAddLink" aria-label="Add link">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            <span class="btn-label">Add link</span>
+          </button>
+          <div class="toolbar-divider" aria-hidden="true"></div>
+          <button type="button" class="btn icon-btn" id="btnTheme" title="Toggle theme" aria-label="Toggle theme">
+            <svg class="icon theme-icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+            <svg class="icon theme-icon-light" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </button>
+          <button type="button" class="btn icon-btn" id="btnHelp" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.25C12.4 11.7 12 12.3 12 13"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+          </button>
+          <button type="button" class="btn" id="btnExport" title="Export backup as JSON" aria-label="Export backup">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+            <span class="btn-label">Export</span>
+          </button>
+          <label class="btn" style="cursor:pointer" title="Import a backup JSON" aria-label="Import backup">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 3h14"/></svg>
+            <span class="btn-label">Import</span>
+            <input type="file" id="importFile" accept=".json,application/json" class="sr-only" />
+          </label>
+        </div>
+      </header>
+
+      <div class="content" id="mainContent">
+        <div class="content-inner">
+          <section class="hero" id="hero" aria-labelledby="heroTitle">
+            <div class="hero-inner">
+              <p class="hero-greeting" id="heroGreeting"><span id="heroGreetingText">Welcome back</span></p>
+              <h1 class="hero-title" id="heroTitle">Welcome back</h1>
+              <div class="hero-stats" id="heroStats" aria-live="polite"></div>
+            </div>
+            <aside class="hero-weather is-loading" id="heroWeather" aria-label="Local weather and time">
+              <div class="weather-icon" id="weatherIcon" aria-hidden="true"></div>
+              <div class="weather-body">
+                <div class="weather-temp" id="weatherTemp">—<span class="deg">°</span></div>
+                <div class="weather-condition" id="weatherCondition">Loading…</div>
+                <div class="weather-meta" id="weatherMeta">--:-- · —</div>
+              </div>
+              <button type="button" class="weather-change" id="weatherChange" aria-label="Change weather location" title="Change location">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              </button>
+            </aside>
+          </section>
+
+          <nav class="smart-folders" id="smartFolders" aria-label="Smart folders"></nav>
+
+          <div id="favoritesBlock" hidden>
+            <div class="section-title">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="color:#facc15"><path d="m12 3 2.6 5.6L20 9.5l-4 4 1 6-5-2.7L7 19.5l1-6-4-4 5.4-.9L12 3Z" fill="currentColor" stroke="currentColor"/></svg>
+              Pinned
+            </div>
+            <div class="link-grid" id="favoritesGrid"></div>
+          </div>
+          <div class="section-title" id="currentFolderLabel">All links</div>
+          <div class="link-grid" id="linkGrid" aria-live="polite"></div>
+          <div class="empty-state" id="emptyState" hidden>
+            <svg class="empty-illustration" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="M8 13h8M8 16h5"/></svg>
+            <h2>No links yet</h2>
+            <p>Add your first link, or drop a backup JSON anywhere on this window to import it.</p>
+            <div class="empty-actions">
+              <button type="button" class="btn btn-primary" id="btnEmptyAdd">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                Add your first link
+              </button>
+              <label class="btn" style="cursor:pointer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 3h14"/></svg>
+                Import JSON
+                <input type="file" id="emptyImportFile" accept=".json,application/json" class="sr-only" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add link</h2>
+        <button type="button" class="btn btn-ghost icon-btn" id="modalClose" aria-label="Close">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label for="linkTitle">Title</label>
+          <input type="text" id="linkTitle" maxlength="200" placeholder="My reference" />
+        </div>
+        <div class="field">
+          <label for="linkUrl">URL or path</label>
+          <input type="text" id="linkUrl" placeholder="https://… or C:\Users\…" />
+          <small class="hint">Web URLs work everywhere. Local folders: paste a path and use “Convert to file link” below.</small>
+        </div>
+        <div class="field">
+          <button type="button" class="btn" id="btnConvertPath">Convert Windows path to file link</button>
+        </div>
+        <div class="field">
+          <label for="linkFolder">Folder</label>
+          <select id="linkFolder"></select>
+        </div>
+        <div class="field">
+          <label for="linkTags">Tags (comma-separated)</label>
+          <input type="text" id="linkTags" placeholder="work, docs" />
+        </div>
+        <div class="field">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
+            <input type="checkbox" id="linkFavorite" />
+            <span>Pin to top</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="modalCancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="modalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal confirm-modal">
+      <div class="modal-body">
+        <div class="confirm-icon-wrap" id="confirmIconWrap">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        </div>
+        <h2 id="confirmTitle">Are you sure?</h2>
+        <p class="confirm-body" id="confirmBody">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="confirmCancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmOk">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="helpOverlay" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="helpTitle">Keyboard shortcuts</h2>
+        <button type="button" class="btn btn-ghost icon-btn" id="helpClose" aria-label="Close">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-list">
+          <div class="shortcut-row"><span class="label">Command palette</span><span class="kbd"><kbd>⌘</kbd><kbd>K</kbd></span></div>
+          <div class="shortcut-row"><span class="label">Focus search</span><span class="kbd"><kbd>/</kbd></span></div>
+          <div class="shortcut-row"><span class="label">Add new link</span><span class="kbd"><kbd>N</kbd></span></div>
+          <div class="shortcut-row"><span class="label">Toggle theme</span><span class="kbd"><kbd>T</kbd></span></div>
+          <div class="shortcut-row"><span class="label">Open this help</span><span class="kbd"><kbd>?</kbd></span></div>
+          <div class="shortcut-row"><span class="label">Close any dialog</span><span class="kbd"><kbd>Esc</kbd></span></div>
+          <div class="shortcut-row"><span class="label">Import a backup</span><span class="kbd">Drop a <kbd>.json</kbd> anywhere</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette (⌘K) -->
+  <div class="cmd-palette-overlay" id="cmdPaletteOverlay" role="dialog" aria-modal="true" aria-labelledby="cmdPaletteLabel">
+    <div class="cmd-palette" id="cmdPalette">
+      <div class="cmd-search-wrap">
+        <svg class="cmd-search-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" class="cmd-search-input" id="cmdSearchInput" placeholder="Search links, folders…" autocomplete="off" aria-label="Search command palette" id="cmdPaletteLabel" />
+      </div>
+      <div class="cmd-results" id="cmdResults" role="listbox"></div>
+      <div class="cmd-footer">
+        <span class="cmd-hint-group"><kbd class="kbd" style="font-size:0.6rem;padding:1px 5px;border-radius:3px;background:var(--surface-3);border:1px solid var(--border-strong)">↑↓</kbd> navigate</span>
+        <span class="cmd-hint-group"><kbd class="kbd" style="font-size:0.6rem;padding:1px 5px;border-radius:3px;background:var(--surface-3);border:1px solid var(--border-strong)">↵</kbd> open</span>
+        <span class="cmd-hint-group"><kbd class="kbd" style="font-size:0.6rem;padding:1px 5px;border-radius:3px;background:var(--surface-3);border:1px solid var(--border-strong)">Esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="context-menu" id="folderContextMenu" role="menu"></div>
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-relevant="additions"></div>
+  <div class="drop-overlay" id="dropOverlay" aria-hidden="true">
+    <div class="drop-overlay-card">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 3h14"/></svg>
+      <h3>Drop your backup JSON</h3>
+      <p>We'll ask whether to replace or merge.</p>
+    </div>
+  </div>
+
+  <div class="overlay" id="folderModalOverlay" role="dialog" aria-modal="true" aria-labelledby="folderModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="folderModalTitle">New folder</h2>
+        <button type="button" class="btn btn-ghost icon-btn" id="folderModalClose" aria-label="Close">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label for="folderName">Name</label>
+          <input type="text" id="folderName" maxlength="80" placeholder="Research" />
+        </div>
+        <div class="field">
+          <label for="folderParent">Parent folder</label>
+          <select id="folderParent" class="folder-parent-native" tabindex="-1" aria-hidden="true"></select>
+          <div class="folder-picker" id="folderParentPicker">
+            <button type="button" class="folder-picker-trigger" id="folderParentPickerTrigger" aria-haspopup="listbox" aria-expanded="false"></button>
+            <div class="folder-picker-menu" id="folderParentPickerMenu" role="listbox"></div>
+          </div>
+          <small class="hint">Choose a parent to create a subfolder, or keep it as a top-level folder.</small>
+          <div class="folder-parent-preview" id="folderParentPreview" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="folderModalCancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="folderModalSave">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
