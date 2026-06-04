@@ -1,0 +1,414 @@
+{
+  "version": 1,
+  "folders": [
+    {
+      "id": "default",
+      "name": "General",
+      "order": 0,
+      "parentId": null,
+      "color": "#5b9fd4",
+      "emoji": ""
+    },
+    {
+      "id": "id-moppfvca-pfnhq8p",
+      "name": "Government Links",
+      "order": 1,
+      "parentId": null,
+      "color": "#22d3ee",
+      "emoji": ""
+    },
+    {
+      "id": "id-moppm4sm-li4pvp3",
+      "name": "Exams",
+      "order": 2,
+      "parentId": null,
+      "color": "#f472b6",
+      "emoji": ""
+    },
+    {
+      "id": "id-moppz5pz-gs0i3q1",
+      "name": "Complaint",
+      "order": 3,
+      "parentId": null,
+      "color": "#facc15",
+      "emoji": ""
+    },
+    {
+      "id": "id-mopq9e67-c4c58yz",
+      "name": "Complain URLs",
+      "parentId": "id-moppfvca-pfnhq8p",
+      "order": 4,
+      "color": "#f87171",
+      "emoji": ""
+    },
+    {
+      "id": "id-moptdpvh-ggg558i",
+      "name": "Nokia",
+      "parentId": null,
+      "order": 5,
+      "color": "#34d399",
+      "emoji": ""
+    },
+    {
+      "id": "id-morecx3l-6v6r5wn",
+      "name": "TRE 4",
+      "parentId": "id-moppm4sm-li4pvp3",
+      "order": 6,
+      "color": "#22d3ee",
+      "emoji": ""
+    },
+    {
+      "id": "id-mored54b-1eqgpg6",
+      "name": "BPSC",
+      "parentId": "id-moppm4sm-li4pvp3",
+      "order": 7,
+      "color": "#f87171",
+      "emoji": ""
+    },
+    {
+      "id": "id-moredhmz-ue5u62o",
+      "name": "BSSC",
+      "parentId": "id-moppm4sm-li4pvp3",
+      "order": 8,
+      "color": "#a78bfa",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpapeye0-xyup00a",
+      "name": "Home Service",
+      "parentId": "id-moppfvca-pfnhq8p",
+      "order": 9,
+      "color": "#34d399",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpapvyn2-2uk0q80",
+      "name": "UGC-NET",
+      "parentId": "id-moppm4sm-li4pvp3",
+      "order": 10,
+      "color": "#fb923c",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpi0enw8-n16abko",
+      "name": "Khushboo",
+      "parentId": "id-moppm4sm-li4pvp3",
+      "order": 11,
+      "color": "#f472b6",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpjg9mas-lrpusn0",
+      "name": "Online Shopping",
+      "parentId": "id-mpi0enw8-n16abko",
+      "order": 12,
+      "color": "#facc15",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpn04qyw-02882yr",
+      "name": "Utility",
+      "parentId": null,
+      "order": 13,
+      "color": "#60a5fa",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpuwivre-9kd6ltf",
+      "name": "Online teaching",
+      "parentId": null,
+      "order": 14,
+      "color": "#8b5cf6",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpuwjykc-sirjbcl",
+      "name": "Maths",
+      "parentId": "id-mpuwivre-9kd6ltf",
+      "order": 15,
+      "color": "#06b6d4",
+      "emoji": ""
+    },
+    {
+      "id": "id-mpwwuyip-9kulmhy",
+      "name": "Science",
+      "parentId": "id-mpuwivre-9kd6ltf",
+      "order": 16,
+      "color": "#10b981",
+      "emoji": ""
+    }
+  ],
+  "links": [
+    {
+      "id": "id-moppmxpp-diw105l",
+      "title": "Bihar SSC",
+      "url": "https://www.onlinebssc.com/4thgralevel/index.php",
+      "folderId": "id-moppm4sm-li4pvp3",
+      "tags": [
+        "exam"
+      ],
+      "favorite": false,
+      "createdAt": 1777809101101,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-moppoidb-qikcvgz",
+      "title": "BPSC",
+      "url": "https://bpsconline.bihar.gov.in/candidate/main#",
+      "folderId": "id-moppm4sm-li4pvp3",
+      "tags": [
+        "exam"
+      ],
+      "favorite": false,
+      "createdAt": 1777809174527,
+      "clickCount": 1,
+      "lastOpenedAt": 1777815200876
+    },
+    {
+      "id": "id-moreh7bl-y9qjly8",
+      "title": "TRE 4 Local Contents",
+      "url": "file:///C:/Users/d2verma/Documents/TRE4/",
+      "folderId": "id-morecx3l-6v6r5wn",
+      "tags": [
+        "docs"
+      ],
+      "favorite": false,
+      "createdAt": 1777911290193,
+      "clickCount": 4,
+      "lastOpenedAt": 1779599438713
+    },
+    {
+      "id": "id-moremyf8-dcfs0pk",
+      "title": "Test Book Test series",
+      "url": "https://testbook.com/bihar-senior-secondary-teacher/test-series/my",
+      "folderId": "id-morecx3l-6v6r5wn",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1777911558596,
+      "clickCount": 1,
+      "lastOpenedAt": 1779099413600
+    },
+    {
+      "id": "id-morenz3o-ujy0qcl",
+      "title": "Kautilya Classes",
+      "url": "https://kautilyaalpje.classx.co.in/purchases",
+      "folderId": "id-morecx3l-6v6r5wn",
+      "tags": [],
+      "favorite": true,
+      "createdAt": 1777911606132,
+      "clickCount": 2,
+      "lastOpenedAt": 1779079318604
+    },
+    {
+      "id": "id-moreu71m-vsjuj0y",
+      "title": "Test Book Test series",
+      "url": "https://testbook.com/bssc-cgl/test-series/my",
+      "folderId": "id-moredhmz-ue5u62o",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1777911896362,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-moreyeq1-70xxihy",
+      "title": "Arithmetic by avadesh dixit",
+      "url": "https://www.adda247.com/my-purchase/23714/toppers-ssc-cgl-math-special-batch-arithmetic-advanced-for-cgl-tier-1-2-2023-exam-hinglish-online-live-classes-by-adda247/23792/arithmetic-maths-online-live-classes-hinglish-complete-batch-by-adda247-batch",
+      "folderId": "id-moredhmz-ue5u62o",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1777912092937,
+      "clickCount": 1,
+      "lastOpenedAt": 1777912858093
+    },
+    {
+      "id": "id-morf21rh-9jql0k5",
+      "title": "English Local",
+      "url": "file:///C:/Users/d2verma/Documents/English/",
+      "folderId": "id-moredhmz-ue5u62o",
+      "tags": [
+        "docs"
+      ],
+      "favorite": false,
+      "createdAt": 1777912262765,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-morf75bl-f8il71u",
+      "title": "BPSC: Online Application System",
+      "url": "https://bpsconline.bihar.gov.in/candidate/main#",
+      "folderId": "id-mored54b-1eqgpg6",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1777912500657,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-morf8zni-jmbz5r3",
+      "title": "Khan Sir Global Study",
+      "url": "https://app.khanglobalstudies.com/courses/bpsc-73rd-foundation-batch-9?llid=12334&vvid=530820",
+      "folderId": "id-mored54b-1eqgpg6",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1777912586622,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-mpapbk7d-cuyrimy",
+      "title": "National Consumer Helpline",
+      "url": "https://consumerhelpline.gov.in/user/manage-complaints.php",
+      "folderId": "id-mopq9e67-c4c58yz",
+      "tags": [
+        "complain"
+      ],
+      "favorite": false,
+      "createdAt": 1779078360073,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-mpapches-eujkbrx",
+      "title": "CPGRAM",
+      "url": "https://pgportal.gov.in/signin",
+      "folderId": "id-mopq9e67-c4c58yz",
+      "tags": [
+        "complain"
+      ],
+      "favorite": false,
+      "createdAt": 1779078403108,
+      "clickCount": 1,
+      "lastOpenedAt": 1779078992169
+    },
+    {
+      "id": "id-mpapd8sh-pa5co89",
+      "title": "Cyber Crime Portal",
+      "url": "https://cybercrime.gov.in/",
+      "folderId": "id-mopq9e67-c4c58yz",
+      "tags": [
+        "complain"
+      ],
+      "favorite": false,
+      "createdAt": 1779078438593,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-mpaped3t-saybj7m",
+      "title": "India Post",
+      "url": "https://crm.indiapost.gov.in/customer/home",
+      "folderId": "id-mopq9e67-c4c58yz",
+      "tags": [
+        "complain"
+      ],
+      "favorite": false,
+      "createdAt": 1779078490841,
+      "clickCount": 2,
+      "lastOpenedAt": 1780058584442
+    },
+    {
+      "id": "id-mpapfojs-zm4qvtn",
+      "title": "Hp Gas",
+      "url": "https://myhpgas.in/myHPGas/HPGas/User/BookingHistory.aspx",
+      "folderId": "id-mpapeye0-xyup00a",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1779078552328,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-mpcgk26c-jgnjxxl",
+      "title": "UGC NET",
+      "url": "https://ugcnet.nta.nic.in/",
+      "folderId": "id-mpapvyn2-2uk0q80",
+      "tags": [
+        "exam"
+      ],
+      "favorite": false,
+      "createdAt": 1779184572420,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-mpcr5f65-c92zruh",
+      "title": "Local  Folder",
+      "url": "file:///C:/Users/d2verma/Documents/UGC%20NET/",
+      "folderId": "id-mpapvyn2-2uk0q80",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1779202365197,
+      "clickCount": 1,
+      "lastOpenedAt": 1779202370311
+    },
+    {
+      "id": "id-mpi0favr-jeag63q",
+      "title": "Admission Registration Dashboard",
+      "url": "https://ppupadm.samarth.edu.in/index.php/app/dashboard",
+      "folderId": "id-mpi0enw8-n16abko",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1779520273623,
+      "clickCount": 2,
+      "lastOpenedAt": 1779715491924
+    },
+    {
+      "id": "id-mpjbko8d-gybpo5n",
+      "title": "Local Files",
+      "url": "file:///C:/Users/d2verma/Documents/Khushboo/",
+      "folderId": "id-mpi0enw8-n16abko",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1779599466157,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-mpjgaiar-m5k8prn",
+      "title": "Sanfe : Beauty Products",
+      "url": "https://sanfe.in/",
+      "folderId": "id-mpjg9mas-lrpusn0",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1779607389987,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    },
+    {
+      "id": "id-mpn055ir-hz1ml0w",
+      "title": "Math Formatter",
+      "url": "https://dillinger.io/",
+      "folderId": "id-mpn04qyw-02882yr",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1779822130995,
+      "clickCount": 3,
+      "lastOpenedAt": 1780409487791
+    },
+    {
+      "id": "id-mpwwv9ff-mw6s78g",
+      "title": "Inner Body 3D",
+      "url": "https://www.innerbody.com/image/musfov.html",
+      "folderId": "id-mpwwuyip-9kulmhy",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1780421292411,
+      "clickCount": 1,
+      "lastOpenedAt": 1780572057575
+    },
+    {
+      "id": "id-mpwx91mf-lkwdnur",
+      "title": "Cell view",
+      "url": "https://human.biodigital.com/view?id=production/maleAdult/cell&lang=en",
+      "folderId": "id-mpwwuyip-9kulmhy",
+      "tags": [],
+      "favorite": false,
+      "createdAt": 1780421935479,
+      "clickCount": 0,
+      "lastOpenedAt": 0
+    }
+  ]
+}
