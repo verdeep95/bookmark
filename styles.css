@@ -2180,3 +2180,8 @@ button.icon-btn, .btn.icon-btn {
   .context-menu, .cmd-palette { animation: none; }
   .toast .toast-progress { animation: none; }
 }
+
+.folder-item.drag-over {
+  background-color: var(--accent-soft);
+  border: 1px dashed var(--accent);
+}

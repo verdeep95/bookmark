@@ -1048,6 +1048,118 @@
     });
   }
 
+  /* ---------- Drag-drop reordering ---------- */
+  function handleDragStart(e) {
+    // This timeout is a hack to ensure the drag image is created before we modify the element
+    setTimeout(function() {
+      e.target.classList.add("dragging");
+    }, 0);
+
+    var linkCard = e.target.closest(".link-card");
+    if (linkCard) {
+      var linkId = linkCard.getAttribute("data-link-id");
+      e.dataTransfer.setData("application/json", JSON.stringify({ type: "link", id: linkId }));
+      e.dataTransfer.effectAllowed = "move";
+      return;
+    }
+
+    var folderItem = e.target.closest(".folder-item");
+    if (folderItem) {
+      var folderId = folderItem.getAttribute("data-folder");
+      if (folderId && folderId !== "all") {
+        e.dataTransfer.setData("application/json", JSON.stringify({ type: "folder", id: folderId }));
+        e.dataTransfer.effectAllowed = "move";
+      } else {
+        e.preventDefault();
+      }
+    }
+  }
+
+  function handleDragEnd(e) {
+    e.target.classList.remove("dragging");
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    var folderItem = e.target.closest(".folder-item");
+    if (folderItem) {
+      folderItem.classList.add("drag-over");
+    }
+  }
+
+  function handleDragLeave(e) {
+    e.preventDefault();
+    var folderItem = e.target.closest(".folder-item");
+    if (folderItem) {
+      folderItem.classList.remove("drag-over");
+    }
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    var folderItem = e.target.closest(".folder-item");
+    if (!folderItem) return;
+    folderItem.classList.remove("drag-over");
+
+    var targetFolderId = folderItem.getAttribute("data-folder");
+    if (!targetFolderId) return;
+
+    var dataStr = e.dataTransfer.getData("application/json");
+    if (!dataStr) return;
+
+    try {
+      var data = JSON.parse(dataStr);
+      if (data.type === "link") {
+        moveLinkToFolder(data.id, targetFolderId);
+      } else if (data.type === "folder") {
+        moveFolderToFolder(data.id, targetFolderId);
+      }
+    } catch (err) {
+      console.error("Drop error", err);
+    }
+  }
+
+  function moveLinkToFolder(linkId, targetFolderId) {
+    if (targetFolderId === "all") return;
+    var link = state.links.find(function(l) { return l.id === linkId; });
+    if (link && link.folderId !== targetFolderId) {
+      link.folderId = targetFolderId;
+      saveState(state);
+      renderFolders();
+      renderLinks();
+      toast("Link moved to '" + folderById(targetFolderId).name + "'", { type: "success", duration: 2000 });
+    }
+  }
+
+  function moveFolderToFolder(folderId, targetFolderId) {
+    if (folderId === targetFolderId) return;
+    var folder = folderById(folderId);
+    if (!folder) return;
+
+    var descendantIds = folderAndDescendantIds(folderId);
+    if (descendantIds.indexOf(targetFolderId) !== -1) {
+      toast("Cannot move a folder into itself.", { type: "error" });
+      return;
+    }
+
+    var newParentId = targetFolderId === "all" ? null : targetFolderId;
+    folder.parentId = newParentId;
+
+    var siblings = childFolders(newParentId);
+    var maxOrder = 0;
+    for(var i = 0; i < siblings.length; i++) {
+        if(siblings[i].id !== folderId && (siblings[i].order || 0) > maxOrder) {
+            maxOrder = siblings[i].order;
+        }
+    }
+    folder.order = maxOrder + 1;
+
+    saveState(state);
+    if (newParentId) expandedFolderIds[newParentId] = true;
+    renderFolders();
+    toast("Folder moved", { type: "success", duration: 2000 });
+  }
+
   /* ---------- Drag-drop import ---------- */
   var dragDepth = 0;
   function setupDragDrop() {
@@ -1129,7 +1241,7 @@
       var toggle = '<span class="folder-toggle' + (hasChildren ? "" : " is-spacer") + '" aria-hidden="true"></span>';
       var icon = folderIconHtml(f);
       var expandedAttr = hasChildren ? ' aria-expanded="' + (isExpanded ? "true" : "false") + '"' : "";
-      html += '<li><button type="button" class="' + classes + '" data-folder="' + escapeAttr(f.id) + '" title="' + escapeAttr(folderPath(f.id)) + '"' + expandedAttr + ">" +
+      html += '<li><button type="button" class="' + classes + '" data-folder="' + escapeAttr(f.id) + '" title="' + escapeAttr(folderPath(f.id)) + '"' + expandedAttr + ' draggable="true">' +
         prefix + toggle + icon +
         '<span class="folder-name">' + safeName + "</span>" +
         '<span class="count">' + count + "</span>" +
@@ -1158,6 +1270,15 @@
         e.preventDefault();
         openFolderContextMenu(f, e.clientX, e.clientY);
       });
+
+      // Drag and drop listeners
+      btn.addEventListener("dragover", handleDragOver);
+      btn.addEventListener("dragleave", handleDragLeave);
+      btn.addEventListener("drop", handleDrop);
+      if (btn.getAttribute("data-folder") !== "all") {
+        btn.addEventListener("dragstart", handleDragStart);
+        btn.addEventListener("dragend", handleDragEnd);
+      }
     });
   }
 
@@ -1243,6 +1364,10 @@
           el.searchInput.focus();
         });
       });
+      root.querySelectorAll(".link-card").forEach(function(card) {
+        card.addEventListener("dragstart", handleDragStart);
+        card.addEventListener("dragend", handleDragEnd);
+      });
     }
     bindCardActions(el.linkGrid);
     bindCardActions(el.favoritesGrid);
@@ -1286,7 +1411,7 @@
     var delay = ' style="--card-delay:' + Math.min((idx || 0) * 30, 240) + 'ms"';
 
     return (
-      '<article class="link-card' + favClass + '"' + delay + ">" +
+      '<article class="link-card' + favClass + '"' + delay + ' draggable="true" data-link-id="' + escapeAttr(link.id) + '">' +
         pinBadge +
         '<div class="link-card-top">' +
           faviconHtml +
