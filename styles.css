@@ -2185,3 +2185,11 @@ button.icon-btn, .btn.icon-btn {
   background-color: var(--accent-soft);
   border: 1px dashed var(--accent);
 }
+
+.folder-item.drag-above {
+  box-shadow: inset 0 2px 0 0 var(--accent);
+}
+
+.folder-item.drag-below {
+  box-shadow: inset 0 -2px 0 0 var(--accent);
+}
