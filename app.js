@@ -930,6 +930,19 @@
     }
     html += "</div>";
     html += '<div class="context-divider"></div>';
+    var siblings = childFolders(folder.parentId);
+    var sibIdx = -1;
+    for (var si = 0; si < siblings.length; si++) {
+      if (siblings[si].id === folder.id) { sibIdx = si; break; }
+    }
+    var isFirst = sibIdx <= 0;
+    var isLast = sibIdx >= siblings.length - 1;
+    html += '<div class="context-section-title">Reorder</div>';
+    html += '<button type="button" class="context-item" data-ctx="movetop"' + (isFirst ? " disabled" : "") + ">Move to top</button>";
+    html += '<button type="button" class="context-item" data-ctx="moveup"' + (isFirst ? " disabled" : "") + ">Move up</button>";
+    html += '<button type="button" class="context-item" data-ctx="movedown"' + (isLast ? " disabled" : "") + ">Move down</button>";
+    html += '<button type="button" class="context-item" data-ctx="movebottom"' + (isLast ? " disabled" : "") + ">Move to bottom</button>";
+    html += '<div class="context-divider"></div>';
     html += '<button type="button" class="context-item danger" data-ctx="delete">' + ICONS.trash + "Delete folder</button>";
 
     el.folderContextMenu.innerHTML = html;
@@ -1004,6 +1017,9 @@
     } else if (action === "addchild") {
       selectedFolderId = id;
       openFolderModal();
+    } else if (action === "moveup" || action === "movedown" || action === "movetop" || action === "movebottom") {
+      var moveMap = { moveup: "up", movedown: "down", movetop: "top", movebottom: "bottom" };
+      moveFolderWithinSiblings(id, moveMap[action]);
     } else if (action === "delete") {
       var descIds = folderAndDescendantIds(id);
       var linkCount = 0;
@@ -1049,6 +1065,22 @@
   }
 
   /* ---------- Drag-drop reordering ---------- */
+  var dropMode = null;
+  var dropTargetId = null;
+
+  function clearFolderDragIndicators() {
+    if (!el.folderList) return;
+    el.folderList.querySelectorAll(".folder-item").forEach(function (item) {
+      item.classList.remove("drag-over", "drag-above", "drag-below");
+    });
+  }
+
+  function reindexSiblingOrders(siblings) {
+    for (var i = 0; i < siblings.length; i++) {
+      siblings[i].order = i;
+    }
+  }
+
   function handleDragStart(e) {
     // This timeout is a hack to ensure the drag image is created before we modify the element
     setTimeout(function() {
@@ -1077,13 +1109,40 @@
 
   function handleDragEnd(e) {
     e.target.classList.remove("dragging");
+    clearFolderDragIndicators();
+    dropMode = null;
+    dropTargetId = null;
   }
 
   function handleDragOver(e) {
     e.preventDefault();
     var folderItem = e.target.closest(".folder-item");
-    if (folderItem) {
+    if (!folderItem) return;
+
+    clearFolderDragIndicators();
+
+    var targetFolderId = folderItem.getAttribute("data-folder");
+    dropTargetId = targetFolderId;
+
+    if (targetFolderId === "all") {
       folderItem.classList.add("drag-over");
+      dropMode = "inside";
+      return;
+    }
+
+    var rect = folderItem.getBoundingClientRect();
+    var offset = e.clientY - rect.top;
+    var edge = rect.height * 0.28;
+
+    if (offset < edge) {
+      folderItem.classList.add("drag-above");
+      dropMode = "before";
+    } else if (offset > rect.height - edge) {
+      folderItem.classList.add("drag-below");
+      dropMode = "after";
+    } else {
+      folderItem.classList.add("drag-over");
+      dropMode = "inside";
     }
   }
 
@@ -1091,7 +1150,7 @@
     e.preventDefault();
     var folderItem = e.target.closest(".folder-item");
     if (folderItem) {
-      folderItem.classList.remove("drag-over");
+      folderItem.classList.remove("drag-over", "drag-above", "drag-below");
     }
   }
 
@@ -1099,12 +1158,20 @@
     e.preventDefault();
     var folderItem = e.target.closest(".folder-item");
     if (!folderItem) return;
-    folderItem.classList.remove("drag-over");
 
     var targetFolderId = folderItem.getAttribute("data-folder");
-    if (!targetFolderId) return;
+    if (!targetFolderId) {
+      clearFolderDragIndicators();
+      return;
+    }
 
+    var mode = dropMode;
     var dataStr = e.dataTransfer.getData("application/json");
+
+    clearFolderDragIndicators();
+    dropMode = null;
+    dropTargetId = null;
+
     if (!dataStr) return;
 
     try {
@@ -1112,7 +1179,11 @@
       if (data.type === "link") {
         moveLinkToFolder(data.id, targetFolderId);
       } else if (data.type === "folder") {
-        moveFolderToFolder(data.id, targetFolderId);
+        if (mode === "inside") {
+          moveFolderToFolder(data.id, targetFolderId);
+        } else {
+          reorderFolderRelativeTo(data.id, targetFolderId, mode === "after");
+        }
       }
     } catch (err) {
       console.error("Drop error", err);
@@ -1158,6 +1229,65 @@
     if (newParentId) expandedFolderIds[newParentId] = true;
     renderFolders();
     toast("Folder moved", { type: "success", duration: 2000 });
+  }
+
+  function reorderFolderRelativeTo(draggedId, targetId, placeAfter) {
+    var dragged = folderById(draggedId);
+    var target = folderById(targetId);
+    if (!dragged || !target || draggedId === targetId) return;
+
+    if (folderAndDescendantIds(draggedId).indexOf(targetId) !== -1) {
+      toast("Cannot move a folder into itself.", { type: "error" });
+      return;
+    }
+
+    dragged.parentId = target.parentId || null;
+
+    var siblings = childFolders(dragged.parentId).filter(function (f) {
+      return f.id !== draggedId;
+    });
+
+    var idx = -1;
+    for (var i = 0; i < siblings.length; i++) {
+      if (siblings[i].id === targetId) { idx = i; break; }
+    }
+    if (idx === -1) return;
+
+    if (placeAfter) idx += 1;
+    siblings.splice(idx, 0, dragged);
+    reindexSiblingOrders(siblings);
+
+    saveState(state);
+    renderFolders();
+    toast("Folder reordered", { type: "success", duration: 1500 });
+  }
+
+  function moveFolderWithinSiblings(id, action) {
+    var f = folderById(id);
+    if (!f) return;
+
+    var siblings = childFolders(f.parentId);
+    var idx = -1;
+    for (var i = 0; i < siblings.length; i++) {
+      if (siblings[i].id === id) { idx = i; break; }
+    }
+    if (idx === -1) return;
+
+    var newIdx = idx;
+    if (action === "up") newIdx = idx - 1;
+    else if (action === "down") newIdx = idx + 1;
+    else if (action === "top") newIdx = 0;
+    else if (action === "bottom") newIdx = siblings.length - 1;
+
+    if (newIdx < 0 || newIdx >= siblings.length || newIdx === idx) return;
+
+    var moved = siblings.splice(idx, 1)[0];
+    siblings.splice(newIdx, 0, moved);
+    reindexSiblingOrders(siblings);
+
+    saveState(state);
+    renderFolders();
+    toast("Folder reordered", { type: "success", duration: 1500 });
   }
 
   /* ---------- Drag-drop import ---------- */
